@@ -44,20 +44,31 @@ zip_url = 'https://raw.githubusercontent.com/OpenDataDE/State-zip-code-GeoJSON/m
 from urllib.request import urlopen
 import json
 with urlopen(zip_url) as response:
-    counties = json.load(response)
+    zips = json.load(response)
 
-len(counties['features'])
+zipTest = zips['features']
 
-import pandas as pd
+zipTest[0].keys()
+zipTest[0]['properties'].keys()
+
+
+addId = []
+for item in zipTest:
+    item['geometry']['id'] = item['properties']['ZCTA5CE10']
+    addId.append(item)
+
+newzips = zips.copy()
+
+newzips['features'] = addId
 
 df = pd.DataFrame(
     {"fips": ["43081"],
-    "unemp": [.02]}
+    "unemp": [2.02]}
 )
 
 import plotly.graph_objects as go
 
-fig = go.Figure(go.Choroplethmapbox(geojson=counties, locations=df.fips, z=df.unemp,
+fig = go.Figure(go.Choroplethmapbox(geojson=zips, ids=zips['features'], locations=df.fips, z=df.unemp,
                                     colorscale="Viridis", zmin=0, zmax=12,
                                     marker_opacity=0.5, marker_line_width=0))
 fig.update_layout(mapbox_style="carto-positron",
