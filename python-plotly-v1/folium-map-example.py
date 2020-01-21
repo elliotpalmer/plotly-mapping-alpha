@@ -25,12 +25,15 @@ import numpy as np
 
 # Link to Zipcode GeoJSON Files compiled on Github 
 # TODO: Link to the true up to date census files
-zip_url = 'https://raw.githubusercontent.com/OpenDataDE/State-zip-code-GeoJSON/master/oh_ohio_zip_codes_geo.min.json'
+# zip_url = 'https://raw.githubusercontent.com/OpenDataDE/State-zip-code-GeoJSON/master/oh_ohio_zip_codes_geo.min.json'
+# response = requests.get(zip_url)
+# zips = response.json()
+
+ohZips = r'./geoJSON/ohioZipGeoJSON.json'
 
 # Return the data
 print('Getting Zip Code Shapefile Data...')
-response = requests.get(zip_url)
-zips = response.json()
+zips = json.load(open(ohZips))
 
 # Create a copy for manipulation
 tmp = zips.copy()
@@ -121,7 +124,7 @@ def zip_layer(name="Layer", geo_data=oh_geo,
         key_on = key_on,
         data=z_data,
         columns=['zip',z],
-        fill_color=fill_color,
+        fill_color=fill_color
     )
 
     return layer
@@ -143,3 +146,4 @@ print("Creating Map File...")
 map.save(outfile='./output/test_map.html')
 
 print("Map Complete!")
+

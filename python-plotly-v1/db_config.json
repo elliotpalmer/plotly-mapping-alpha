@@ -1,0 +1,7 @@
+{
+  "PGHOST": "ecodb-col-02-dev.cwcatfxpesaq.us-east-2.rds.amazonaws.com",
+  "PGDATABASE":"ecoplumbersdb",
+  "PGUSER":"ecoplumbers",
+  "PGPASSWORD":"ECOUSA2018",
+  "PGPORT":"2468"
+}
